@@ -75,11 +75,17 @@ export async function POST(request: NextRequest) {
                   
                   // Handle content block delta (streaming text)
                   if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
-                    controller.enqueue(
-                      encoder.encode(`data: ${JSON.stringify({
-                        content: parsed.delta.text
-                      })}\n\n`)
-                    )
+                    const chunk = `data: ${JSON.stringify({
+                      content: parsed.delta.text
+                    })}\n\n`
+                    
+                    controller.enqueue(encoder.encode(chunk))
+                    
+                    // Force flush for Amplify/CloudFront
+                    controller.enqueue(encoder.encode(''))
+                    
+                    // Small delay to make streaming more visible
+                    await new Promise(resolve => setTimeout(resolve, 50))
                   }
                   
                   // Handle message stop (end of stream)
@@ -114,8 +120,12 @@ export async function POST(request: NextRequest) {
     return new Response(stream, {
       headers: {
         'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Connection': 'keep-alive',
+        'X-Accel-Buffering': 'no', // Disable nginx buffering
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type',
       },
     })
   } catch (error) {

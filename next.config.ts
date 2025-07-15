@@ -25,6 +25,29 @@ const nextConfig: NextConfig = {
   // Disable static optimization for API routes to ensure they run server-side
   trailingSlash: false,
 
+  // Headers for better streaming support
+  async headers() {
+    return [
+      {
+        source: '/api/chat',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+          {
+            key: 'X-Accel-Buffering',
+            value: 'no',
+          },
+          {
+            key: 'Connection',
+            value: 'keep-alive',
+          },
+        ],
+      },
+    ]
+  },
+
   // Ensure proper handling of environment variables in different environments
   publicRuntimeConfig: {
     // These will be available on both client and server

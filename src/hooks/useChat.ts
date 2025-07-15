@@ -157,11 +157,14 @@ export function useChat() {
 
           const chunk = decoder.decode(value)
           const lines = chunk.split('\n').filter(line => line.trim())
+          
+          console.log('Received chunk:', chunk.length, 'bytes')
 
           for (const line of lines) {
             if (line.startsWith('data: ')) {
               const data = line.slice(6)
               if (data === '[DONE]') {
+                console.log('Stream completed')
                 setStreamingMessageId('')
                 break
               }
@@ -171,6 +174,7 @@ export function useChat() {
                 
                 if (parsed.content) {
                   accumulatedContent += parsed.content
+                  console.log('Streaming update:', parsed.content)
                   updateMessage(conversationId, assistantMessageId, accumulatedContent)
                 } else if (parsed.error) {
                   throw new Error(parsed.error)
