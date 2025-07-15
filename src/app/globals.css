@@ -181,6 +181,60 @@ body {
   min-height: 48px;
 }
 
+/* iOS PWA Input Fixes */
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific fixes */
+  .chat-textarea {
+    -webkit-appearance: none;
+    -webkit-user-select: text;
+    -webkit-touch-callout: default;
+    transform: translateZ(0); /* Force hardware acceleration */
+  }
+  
+  /* Fix for iOS PWA input focus issues */
+  .chat-textarea:focus {
+    -webkit-user-select: text;
+    -webkit-touch-callout: default;
+    position: relative;
+    z-index: 999;
+  }
+  
+  /* Prevent zoom on input focus in PWA mode */
+  @media screen and (max-width: 768px) {
+    .chat-textarea {
+      font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+  }
+}
+
+/* PWA-specific fixes */
+@media all and (display-mode: standalone) {
+  /* When app is added to home screen */
+  .chat-textarea {
+    -webkit-user-select: text !important;
+    -webkit-touch-callout: default !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+  
+  .chat-input-container {
+    /* Ensure input container is accessible in PWA mode */
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* Fix for iOS safe area in PWA mode */
+  .chat-input-container {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  
+  /* Use dynamic viewport height for better iOS PWA support */
+  .main-content {
+    height: calc(var(--vh, 1vh) * 100);
+    min-height: calc(var(--vh, 1vh) * 100);
+  }
+}
+
 /* Input styles */
 .input {
   padding: 12px;

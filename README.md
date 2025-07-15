@@ -1,6 +1,6 @@
-# ChatGPT Clone with Claude 4 Sonnet
+# ChatGPT Clone with Claude via AWS Bedrock
 
-A modern chat application built with Next.js that provides a ChatGPT-like experience using Claude 4 Sonnet via AWS Bedrock.
+A modern chat application built with Next.js that provides a ChatGPT-like experience using Claude models via AWS Bedrock.
 
 ## Features
 
@@ -11,7 +11,7 @@ A modern chat application built with Next.js that provides a ChatGPT-like experi
 - **Progressive Web App (PWA)**: Install as a native app with offline capabilities
 - **Clean Interface**: Modern, responsive UI with custom CSS styling and smooth theme transitions
 - **Real-time Streaming**: Streaming responses for a natural conversation flow
-- **Claude 4 Sonnet**: Powered by Anthropic's latest Claude 4 Sonnet model via AWS Bedrock
+- **Claude Models**: Powered by Anthropic's Claude models via AWS Bedrock (configurable via environment variable)
 - **New Conversation**: Always opens to a fresh, empty conversation by default
 - **Conversation Management**: Create, switch between, and delete conversations with persistent history
 - **Clear All Conversations**: One-click button to wipe all conversation history and start fresh
@@ -22,7 +22,7 @@ A modern chat application built with Next.js that provides a ChatGPT-like experi
 
 - **Frontend**: Next.js 14 with App Router
 - **UI Framework**: Custom CSS with clean, modern styling
-- **AI Model**: Claude 4 Sonnet (`anthropic.claude-sonnet-4-20250514-v1:0`)
+- **AI Model**: Configurable Claude models (default: `anthropic.claude-3-5-sonnet-20241022-v2:0`)
 - **Backend**: Next.js API Routes
 - **AWS Integration**: AWS Bedrock Runtime API
 - **Storage**: Browser localStorage for conversation persistence
@@ -32,7 +32,7 @@ A modern chat application built with Next.js that provides a ChatGPT-like experi
 
 - Node.js 18+ 
 - AWS Account with Bedrock access
-- Claude 4 Sonnet model enabled in AWS Bedrock (us-east-1 region)
+- Claude models enabled in AWS Bedrock (us-east-1 region recommended)
 - AWS credentials configured (via AWS CLI, environment variables, or IAM roles)
 
 ## Environment Variables
@@ -73,7 +73,7 @@ JPC_AWS_SECRET_ACCESS_KEY=your_secret_access_key
    # Edit .env.local with your AWS credentials
    ```
 
-3. **Verify Claude 4 Sonnet access:**
+3. **Verify Claude model access:**
    ```bash
    aws bedrock list-foundation-models --region us-east-1 --by-provider Anthropic
    ```
@@ -88,7 +88,7 @@ JPC_AWS_SECRET_ACCESS_KEY=your_secret_access_key
 
 ## API Endpoints
 
-- `POST /api/chat` - Send messages to Claude 4 Sonnet and receive streaming responses
+- `POST /api/chat` - Send messages to Claude and receive streaming responses
 
 ### Theme System
 
@@ -191,7 +191,7 @@ The application is a fully functional PWA that can be installed on any device:
 - Graceful fallback for non-streaming scenarios
 
 ### AWS Bedrock Integration
-- Uses the latest Claude 4 Sonnet model via Bedrock Runtime API
+- Uses the configured Claude model via Bedrock Runtime API
 - Implements proper request formatting for Anthropic's message format
 - Handles authentication via AWS SDK credentials chain
 
@@ -244,8 +244,25 @@ This application can be deployed to any platform that supports Next.js:
 ### AWS Deployment Notes
 When deploying to AWS, ensure your deployment environment has:
 - IAM role with Bedrock access permissions
-- Access to the Claude 4 Sonnet model in the target region
+- Access to the Claude model in the target region
 - Proper VPC configuration if using private subnets
+
+#### Amplify Streaming Configuration
+AWS Amplify requires special configuration to support streaming responses. The `customHeaders.yml` file configures Amplify to disable buffering for the chat API:
+
+```yaml
+customHeaders:
+  - pattern: '/api/chat'
+    headers:
+      - key: 'Cache-Control'
+        value: 'no-cache, no-store, must-revalidate'
+      - key: 'X-Accel-Buffering'
+        value: 'no'
+      - key: 'Connection'
+        value: 'keep-alive'
+```
+
+**Important**: Without this configuration, Amplify will buffer streaming responses and deliver them as a single payload, breaking the real-time streaming experience.
 
 ## License
 

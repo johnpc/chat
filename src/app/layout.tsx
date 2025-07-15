@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import "./globals.css";
+import PWAInitializer from "@/components/PWAInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,8 +68,9 @@ export const viewport: Viewport = {
   themeColor: "#3b82f6",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5, // Allow zooming for better input accessibility
+  userScalable: true, // Enable user scaling for input fields
+  viewportFit: "cover", // Better handling of safe areas on iOS
 };
 
 export default function RootLayout({
@@ -90,6 +92,7 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
+          <PWAInitializer />
           {children}
         </ThemeProvider>
       </body>

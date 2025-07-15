@@ -10,6 +10,10 @@
   "scope": "/",
   "lang": "en",
   "categories": ["productivity", "utilities", "communication"],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
   "icons": [
     {
       "src": "/icons/favicon-16x16.png",

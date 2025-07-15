@@ -1,0 +1,14 @@
+HTTP/2 200 
+content-type: text/event-stream
+date: Tue, 15 Jul 2025 02:12:19 GMT
+cache-control: no-cache
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+access-control-allow-headers: Content-Type
+access-control-allow-methods: POST
+access-control-allow-origin: *
+x-cache: Miss from cloudfront
+via: 1.1 cf578bec6ba4cca4f0f2b684f49f235a.cloudfront.net (CloudFront)
+x-amz-cf-pop: ORD58-P10
+alt-svc: h3=":443"; ma=86400
+x-amz-cf-id: ibRoumZ11GVFApZgmZu9Vy9h67jpeAzFjNw7UlgPTUK5xIqZUr4bLw==
+
