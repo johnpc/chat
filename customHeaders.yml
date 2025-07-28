@@ -1,17 +1,17 @@
 customHeaders:
-  - pattern: '/api/chat'
+  - pattern: "/api/chat"
     headers:
-      - key: 'Cache-Control'
-        value: 'no-cache, no-store, must-revalidate'
-      - key: 'X-Accel-Buffering'
-        value: 'no'
-      - key: 'Connection'
-        value: 'keep-alive'
-      - key: 'Content-Type'
-        value: 'text/event-stream'
-  - pattern: '/api/**'
+      - key: "Cache-Control"
+        value: "no-cache, no-store, must-revalidate"
+      - key: "X-Accel-Buffering"
+        value: "no"
+      - key: "Connection"
+        value: "keep-alive"
+      - key: "Content-Type"
+        value: "text/event-stream"
+  - pattern: "/api/**"
     headers:
-      - key: 'X-Accel-Buffering'
-        value: 'no'
-      - key: 'Cache-Control'
-        value: 'no-cache'
+      - key: "X-Accel-Buffering"
+        value: "no"
+      - key: "Cache-Control"
+        value: "no-cache"

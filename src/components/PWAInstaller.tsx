@@ -1,76 +1,81 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Download, X } from 'lucide-react'
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Download, X } from "lucide-react";
 
 // Define the BeforeInstallPromptEvent interface
 interface BeforeInstallPromptEvent extends Event {
-  prompt(): Promise<void>
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
+  prompt(): Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
 export function PWAInstaller() {
-  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
-  const [showInstallPrompt, setShowInstallPrompt] = useState(false)
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   useEffect(() => {
     // Register service worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/sw.js")
           .then((registration) => {
-            console.log('SW registered: ', registration)
+            console.log("SW registered: ", registration);
           })
           .catch((registrationError) => {
-            console.log('SW registration failed: ', registrationError)
-          })
-      })
+            console.log("SW registration failed: ", registrationError);
+          });
+      });
     }
 
     // Listen for the beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: Event) => {
       // Prevent the mini-infobar from appearing on mobile
-      e.preventDefault()
+      e.preventDefault();
       // Stash the event so it can be triggered later
-      setDeferredPrompt(e as BeforeInstallPromptEvent)
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
       // Show the install prompt
-      setShowInstallPrompt(true)
-    }
+      setShowInstallPrompt(true);
+    };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
     // Hide the prompt if the app is already installed
-    window.addEventListener('appinstalled', () => {
-      setShowInstallPrompt(false)
-      setDeferredPrompt(null)
-    })
+    window.addEventListener("appinstalled", () => {
+      setShowInstallPrompt(false);
+      setDeferredPrompt(null);
+    });
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-    }
-  }, [])
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt,
+      );
+    };
+  }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return
+    if (!deferredPrompt) return;
 
     // Show the install prompt
-    deferredPrompt.prompt()
+    deferredPrompt.prompt();
 
     // Wait for the user to respond to the prompt
-    const { outcome } = await deferredPrompt.userChoice
-    console.log(`User response to the install prompt: ${outcome}`)
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
 
     // Clear the deferredPrompt
-    setDeferredPrompt(null)
-    setShowInstallPrompt(false)
-  }
+    setDeferredPrompt(null);
+    setShowInstallPrompt(false);
+  };
 
   const handleDismiss = () => {
-    setShowInstallPrompt(false)
-  }
+    setShowInstallPrompt(false);
+  };
 
-  if (!showInstallPrompt) return null
+  if (!showInstallPrompt) return null;
 
   return (
     <div className="pwa-install-prompt">
@@ -98,5 +103,5 @@ export function PWAInstaller() {
         </div>
       </div>
     </div>
-  )
+  );
 }

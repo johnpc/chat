@@ -1,14 +1,14 @@
-'use client'
+"use client";
 
-import { useEffect, useRef, useState } from 'react'
-import { useChat } from '@/hooks/useChat'
-import { ChatMessage } from './ChatMessage'
-import { ChatInput } from './ChatInput'
-import { ConversationList } from './ConversationList'
-import { Button } from './ui/button'
-import { Menu } from 'lucide-react'
-import { PWAInstaller } from './PWAInstaller'
-import { ThemeToggle } from './ThemeToggle'
+import { useEffect, useRef, useState } from "react";
+import { useChat } from "@/hooks/useChat";
+import { ChatMessage } from "./ChatMessage";
+import { ChatInput } from "./ChatInput";
+import { ConversationList } from "./ConversationList";
+import { Button } from "./ui/button";
+import { Menu } from "lucide-react";
+import { PWAInstaller } from "./PWAInstaller";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Chat() {
   const {
@@ -21,25 +21,25 @@ export function Chat() {
     selectConversation,
     deleteConversation,
     clearAllConversations,
-  } = useChat()
+  } = useChat();
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [currentConversation?.messages, streamingMessageId])
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [currentConversation?.messages, streamingMessageId]);
 
   const handleSelectConversation = (id: string) => {
-    selectConversation(id)
-    setIsSidebarOpen(false) // Close sidebar on mobile after selection
-  }
+    selectConversation(id);
+    setIsSidebarOpen(false); // Close sidebar on mobile after selection
+  };
 
   const handleNewConversation = () => {
-    createNewConversation()
-    setIsSidebarOpen(false) // Close sidebar on mobile after creating new conversation
-  }
+    createNewConversation();
+    setIsSidebarOpen(false); // Close sidebar on mobile after creating new conversation
+  };
 
   return (
     <div className="chat-container">
@@ -65,14 +65,16 @@ export function Chat() {
           >
             <Menu size={20} />
           </Button>
-          <h1 className="mobile-title" style={{ color: 'var(--chat-text)' }}>jpc.chat</h1>
+          <h1 className="mobile-title" style={{ color: "var(--chat-text)" }}>
+            jpc.chat
+          </h1>
           <ThemeToggle />
         </div>
 
         {/* Header */}
         <div className="chat-header">
           <h1 className="chat-title">
-            {currentConversation?.title || 'New Conversation'}
+            {currentConversation?.title || "New Conversation"}
           </h1>
         </div>
 
@@ -80,9 +82,7 @@ export function Chat() {
         <div className="messages-container">
           {currentConversation?.messages.length === 0 ? (
             <div className="welcome-message">
-              <div className="welcome-title">
-                Welcome to jpc.chat
-              </div>
+              <div className="welcome-title">Welcome to jpc.chat</div>
               <div className="welcome-subtitle">
                 Start a conversation by typing a message below
               </div>
@@ -107,9 +107,9 @@ export function Chat() {
           autoFocus={true}
         />
       </div>
-      
+
       {/* PWA Install Prompt */}
       <PWAInstaller />
     </div>
-  )
+  );
 }

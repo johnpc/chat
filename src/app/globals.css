@@ -21,7 +21,7 @@
   --destructive-foreground: #ffffff;
   --ring: #3b82f6;
   --radius: 0.5rem;
-  
+
   /* Chat specific colors */
   --chat-bg: #ffffff;
   --chat-surface: #f8fafc;
@@ -61,7 +61,7 @@
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --ring: #3b82f6;
-  
+
   /* Chat specific dark colors */
   --chat-bg: #0f172a;
   --chat-surface: #1e293b;
@@ -88,14 +88,16 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--chat-bg);
   color: var(--chat-text);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* Button styles */
@@ -190,7 +192,7 @@ body {
     -webkit-touch-callout: default;
     transform: translateZ(0); /* Force hardware acceleration */
   }
-  
+
   /* Fix for iOS PWA input focus issues */
   .chat-textarea:focus {
     -webkit-user-select: text;
@@ -198,7 +200,7 @@ body {
     position: relative;
     z-index: 999;
   }
-  
+
   /* Prevent zoom on input focus in PWA mode */
   @media screen and (max-width: 768px) {
     .chat-textarea {
@@ -216,18 +218,18 @@ body {
     pointer-events: auto !important;
     touch-action: manipulation !important;
   }
-  
+
   .chat-input-container {
     /* Ensure input container is accessible in PWA mode */
     position: relative;
     z-index: 10;
   }
-  
+
   /* Fix for iOS safe area in PWA mode */
   .chat-input-container {
     padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
-  
+
   /* Use dynamic viewport height for better iOS PWA support */
   .main-content {
     height: calc(var(--vh, 1vh) * 100);
@@ -243,7 +245,9 @@ body {
   font-family: inherit;
   font-size: 14px;
   line-height: 1.4;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .input:focus {
@@ -294,7 +298,9 @@ body {
   padding: 12px 16px;
   border-bottom: 1px solid var(--chat-border);
   background-color: var(--sidebar-bg);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .mobile-header h1,
@@ -335,7 +341,9 @@ body {
   padding: 16px 24px;
   border-bottom: 1px solid var(--chat-border);
   background-color: var(--chat-bg);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 /* Header title styles - Simplified for mobile compatibility */
@@ -420,7 +428,10 @@ body {
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    transform 0.3s ease-in-out,
+    background-color 0.3s ease,
+    border-color 0.3s ease;
   z-index: 1000;
 }
 
@@ -439,7 +450,9 @@ body {
   z-index: 999;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
 }
 
 .sidebar-overlay.visible {
@@ -517,7 +530,9 @@ body {
   padding: 4px;
   border-radius: 4px;
   color: var(--chat-text-muted);
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .sidebar-close:hover {
@@ -536,7 +551,9 @@ body {
   margin: 4px 0;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -587,7 +604,9 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .menu-button {
@@ -695,7 +714,9 @@ body {
   background: var(--chat-bg);
   position: sticky;
   bottom: 0;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .chat-input-wrapper {
@@ -723,7 +744,11 @@ body {
   line-height: 1.5;
   resize: none;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s ease, color 0.3s ease;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background-color 0.3s ease,
+    color 0.3s ease;
   font-family: inherit;
   background: var(--chat-input-bg);
   color: var(--chat-text);
@@ -765,7 +790,9 @@ body {
   border: none !important;
   border-radius: 12px !important;
   cursor: pointer !important;
-  transition: background-color 0.2s, opacity 0.2s !important;
+  transition:
+    background-color 0.2s,
+    opacity 0.2s !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -826,8 +853,14 @@ body {
 }
 
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 /* Desktop styles */
@@ -837,19 +870,19 @@ body {
     transform: translateX(0);
     transition: none;
   }
-  
+
   .sidebar-overlay {
     display: none;
   }
-  
+
   .menu-button {
     display: none;
   }
-  
+
   .message.user {
     margin-left: 20%;
   }
-  
+
   .message.assistant {
     margin-right: 20%;
   }
@@ -860,7 +893,7 @@ body {
   .message.user {
     margin-left: 25%;
   }
-  
+
   .message.assistant {
     margin-right: 25%;
   }
@@ -888,7 +921,9 @@ body {
   padding: 12px 16px;
   border-bottom: 1px solid var(--chat-border);
   background-color: var(--sidebar-bg);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .mobile-header h1,

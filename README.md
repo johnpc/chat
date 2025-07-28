@@ -30,7 +30,7 @@ A modern chat application built with Next.js that provides a ChatGPT-like experi
 
 ## Requirements
 
-- Node.js 18+ 
+- Node.js 18+
 - AWS Account with Bedrock access
 - Claude models enabled in AWS Bedrock (us-east-1 region recommended)
 - AWS credentials configured (via AWS CLI, environment variables, or IAM roles)
@@ -63,22 +63,26 @@ JPC_AWS_SECRET_ACCESS_KEY=your_secret_access_key
 ## Getting Started
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Set up environment variables:**
+
    ```bash
    cp .env.example .env.local
    # Edit .env.local with your AWS credentials
    ```
 
 3. **Verify Claude model access:**
+
    ```bash
    aws bedrock list-foundation-models --region us-east-1 --by-provider Anthropic
    ```
 
 4. **Run the development server:**
+
    ```bash
    npm run dev
    ```
@@ -95,22 +99,26 @@ JPC_AWS_SECRET_ACCESS_KEY=your_secret_access_key
 The application features a comprehensive dark/light theme system:
 
 **Dark Mode (Default):**
+
 - Modern dark color scheme optimized for low-light environments
 - Reduced eye strain during extended use
 - Professional appearance with high contrast
 
 **Light Mode:**
+
 - Clean, bright interface for well-lit environments
 - Traditional light theme with excellent readability
 - Seamless switching with smooth transitions
 
 **Theme Toggle:**
+
 - Located in the top-right corner of the interface
 - Instant theme switching with smooth animations
 - Preference automatically saved to localStorage
 - Consistent theming across all UI components
 
 **Technical Implementation:**
+
 - CSS custom properties (variables) for consistent theming across all components
 - Smooth transitions between theme changes with enhanced visual feedback
 - Proper contrast ratios for accessibility and readability
@@ -131,11 +139,13 @@ The application is designed with a mobile-first approach:
 ### Desktop vs Mobile Experience
 
 **Desktop (>768px):**
+
 - Sidebar is always visible on the left
 - Full conversation list is accessible at all times
 - Larger text and spacing for mouse interaction
 
 **Mobile (≤768px):**
+
 - Sidebar is hidden by default to maximize chat area
 - Hamburger menu button in the top-left corner opens the sidebar
 - Sidebar slides in from the left with a backdrop overlay
@@ -147,11 +157,13 @@ The application is designed with a mobile-first approach:
 The application is a fully functional PWA that can be installed on any device:
 
 **Installation:**
+
 - **Desktop**: Look for the install button in your browser's address bar or the install prompt
 - **Mobile**: Use "Add to Home Screen" from your browser's menu
 - **Automatic Prompt**: The app will show an install prompt when PWA criteria are met
 
 **PWA Features:**
+
 - **Offline Support**: Basic functionality works without internet connection
 - **Native App Experience**: Runs in standalone mode without browser UI
 - **App Icons**: Custom-designed logo appears on home screen and app launcher
@@ -159,6 +171,7 @@ The application is a fully functional PWA that can be installed on any device:
 - **Service Worker**: Caches resources for faster loading and offline access
 
 **Technical Details:**
+
 - Manifest file with proper app metadata
 - Service worker for offline functionality and caching
 - Multiple icon sizes (16x16, 32x32, 180x180, 192x192, 512x512)
@@ -180,22 +193,26 @@ The application is a fully functional PWA that can be installed on any device:
 ## Key Implementation Details
 
 ### Conversation Management
+
 - Each conversation has a unique ID generated client-side
 - Messages are stored in localStorage with conversation grouping
 - New conversations are created automatically on app load
 - Conversation history is preserved across browser sessions
 
 ### Streaming Implementation
+
 - Uses Server-Sent Events (SSE) for real-time response streaming
 - Implements proper error handling and connection management
 - Graceful fallback for non-streaming scenarios
 
 ### AWS Bedrock Integration
+
 - Uses the configured Claude model via Bedrock Runtime API
 - Implements proper request formatting for Anthropic's message format
 - Handles authentication via AWS SDK credentials chain
 
 ### Styling Approach
+
 - **Custom CSS**: Clean, maintainable CSS without complex frameworks
 - **Modern Design**: Professional appearance with proper spacing and colors
 - **Responsive Layout**: Works on desktop and mobile devices
@@ -242,24 +259,27 @@ This application can be deployed to any platform that supports Next.js:
 - **Docker**: Containerized deployment option
 
 ### AWS Deployment Notes
+
 When deploying to AWS, ensure your deployment environment has:
+
 - IAM role with Bedrock access permissions
 - Access to the Claude model in the target region
 - Proper VPC configuration if using private subnets
 
 #### Amplify Streaming Configuration
+
 AWS Amplify requires special configuration to support streaming responses. The `customHeaders.yml` file configures Amplify to disable buffering for the chat API:
 
 ```yaml
 customHeaders:
-  - pattern: '/api/chat'
+  - pattern: "/api/chat"
     headers:
-      - key: 'Cache-Control'
-        value: 'no-cache, no-store, must-revalidate'
-      - key: 'X-Accel-Buffering'
-        value: 'no'
-      - key: 'Connection'
-        value: 'keep-alive'
+      - key: "Cache-Control"
+        value: "no-cache, no-store, must-revalidate"
+      - key: "X-Accel-Buffering"
+        value: "no"
+      - key: "Connection"
+        value: "keep-alive"
 ```
 
 **Important**: Without this configuration, Amplify will buffer streaming responses and deliver them as a single payload, breaking the real-time streaming experience.

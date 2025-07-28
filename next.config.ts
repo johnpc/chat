@@ -17,10 +17,10 @@ const nextConfig: NextConfig = {
   },
 
   // External packages that should not be bundled
-  serverExternalPackages: ['@aws-sdk/client-bedrock-runtime'],
+  serverExternalPackages: ["@aws-sdk/client-bedrock-runtime"],
 
   // Output configuration for better Amplify compatibility
-  output: 'standalone',
+  output: "standalone",
 
   // Disable static optimization for API routes to ensure they run server-side
   trailingSlash: false,
@@ -29,23 +29,23 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/api/chat',
+        source: "/api/chat",
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'no-cache, no-store, must-revalidate',
+            key: "Cache-Control",
+            value: "no-cache, no-store, must-revalidate",
           },
           {
-            key: 'X-Accel-Buffering',
-            value: 'no',
+            key: "X-Accel-Buffering",
+            value: "no",
           },
           {
-            key: 'Connection',
-            value: 'keep-alive',
+            key: "Connection",
+            value: "keep-alive",
           },
         ],
       },
-    ]
+    ];
   },
 
   // Ensure proper handling of environment variables in different environments

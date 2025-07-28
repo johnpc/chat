@@ -4,9 +4,9 @@
  */
 
 export interface AWSCredentialInfo {
-  hasCredentials: boolean
-  credentialSource: 'jpc-prefixed' | 'standard' | 'default-chain'
-  region: string
+  hasCredentials: boolean;
+  credentialSource: "jpc-prefixed" | "standard" | "default-chain";
+  region: string;
 }
 
 /**
@@ -14,28 +14,32 @@ export interface AWSCredentialInfo {
  * without exposing actual credential values
  */
 export function getAWSCredentialInfo(): AWSCredentialInfo {
-  const hasJPCCredentials = !!(process.env.JPC_AWS_ACCESS_KEY_ID && process.env.JPC_AWS_SECRET_ACCESS_KEY)
-  const hasStandardCredentials = !!(process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY)
-  
-  let credentialSource: AWSCredentialInfo['credentialSource']
-  let hasCredentials: boolean
+  const hasJPCCredentials = !!(
+    process.env.JPC_AWS_ACCESS_KEY_ID && process.env.JPC_AWS_SECRET_ACCESS_KEY
+  );
+  const hasStandardCredentials = !!(
+    process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY
+  );
+
+  let credentialSource: AWSCredentialInfo["credentialSource"];
+  let hasCredentials: boolean;
 
   if (hasJPCCredentials) {
-    credentialSource = 'jpc-prefixed'
-    hasCredentials = true
+    credentialSource = "jpc-prefixed";
+    hasCredentials = true;
   } else if (hasStandardCredentials) {
-    credentialSource = 'standard'
-    hasCredentials = true
+    credentialSource = "standard";
+    hasCredentials = true;
   } else {
-    credentialSource = 'default-chain'
-    hasCredentials = false // We don't know if default chain has credentials
+    credentialSource = "default-chain";
+    hasCredentials = false; // We don't know if default chain has credentials
   }
 
   return {
     hasCredentials,
     credentialSource,
-    region: process.env.BEDROCK_REGION || process.env.AWS_REGION || 'us-west-2'
-  }
+    region: process.env.BEDROCK_REGION || process.env.AWS_REGION || "us-west-2",
+  };
 }
 
 /**
@@ -43,8 +47,12 @@ export function getAWSCredentialInfo(): AWSCredentialInfo {
  */
 export function getAWSCredentials() {
   return {
-    accessKeyId: process.env.JPC_AWS_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.JPC_AWS_SECRET_ACCESS_KEY || process.env.AWS_SECRET_ACCESS_KEY || '',
-    region: process.env.BEDROCK_REGION || process.env.AWS_REGION || 'us-west-2'
-  }
+    accessKeyId:
+      process.env.JPC_AWS_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID || "",
+    secretAccessKey:
+      process.env.JPC_AWS_SECRET_ACCESS_KEY ||
+      process.env.AWS_SECRET_ACCESS_KEY ||
+      "",
+    region: process.env.BEDROCK_REGION || process.env.AWS_REGION || "us-west-2",
+  };
 }
